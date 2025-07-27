@@ -11,28 +11,19 @@ def traduzir_mengaolang_para_python(codigo_mng):
     indentacao_nivel = 0
     indentacao_str = "    " # 4 espaços por nível
 
-    # Dicionário de substituições diretas e simples
-    comandos_simples = {
-        r'\bfla é campeão\b': 'def main():',
-        r'\bfla fim\b': 'if __name__ == "__main__":\n    main()',
-    }
-
     linhas_mng = codigo_mng.split('\n')
     bloco_aberto = False
 
     for i, linha in enumerate(linhas_mng):
         linha_strip = linha.strip()
         
-        # Ignora linhas em branco
         if not linha_strip:
             linhas_python.append("")
             continue
 
         linha_traduzida = None
         
-        # Dedentação: se a linha atual tem menos indentação que a anterior,
-        # e um bloco estava aberto, diminui o nível.
-        # Esta é uma lógica simples para linguagens sem marcadores de fim de bloco.
+        # Lógica de dedentação simplificada
         if i > 0 and bloco_aberto:
             indentacao_anterior = len(linhas_mng[i-1]) - len(linhas_mng[i-1].lstrip(' '))
             indentacao_atual = len(linha) - len(linha.lstrip(' '))
@@ -40,50 +31,48 @@ def traduzir_mengaolang_para_python(codigo_mng):
                 indentacao_nivel = max(0, indentacao_nivel - 1)
                 bloco_aberto = False
 
-
         prefixo_indentacao = indentacao_str * indentacao_nivel
 
-        # --- Regras de Tradução com Regex ---
+        # --- Regras de Tradução ---
 
         # 0. Início e Fim do programa
         if re.search(r'\bfla é campeão\b', linha_strip):
-            linhas_python.append(comandos_simples[r'\bfla é campeão\b'])
+            linhas_python.append('def main():')
             indentacao_nivel += 1
             continue
         if re.search(r'\bfla fim\b', linha_strip):
-            indentacao_nivel = 0 # Reseta a indentação para o bloco final
-            linhas_python.append(comandos_simples[r'\bfla fim\b'])
+            indentacao_nivel = 0
+            linhas_python.append('if __name__ == "__main__":\n    main()')
             continue
 
-        # 1. Atribuição de variável: <var> é <tipo> <valor>
-        match = re.match(r'^(.*?)\s+é\s+(craque|torcida|camisa10)\s+(.*)', linha_strip)
+        # 1. Imprimir: fla imprime [tipo] <coisa>  <- REGRA CORRIGIDA AQUI
+        match = re.match(r'fla imprime\s+(?:craque|torcida|camisa10\s+)?(.*)', linha_strip)
         if match:
-            var_name, var_type, value = match.groups()
-            var_name = var_name.strip()
-            
-            if "torcida canta" in value:
-                # Entrada de dados
-                if var_type == "craque":
-                    linha_traduzida = f'{var_name} = int(input())'
-                else: # Assume string para outros tipos
-                    linha_traduzida = f'{var_name} = input()'
-            else:
-                # Atribuição normal
-                if var_type == "craque":
-                    linha_traduzida = f'{var_name} = int({value})'
-                elif var_type == "torcida":
-                    linha_traduzida = f'{var_name} = {value}'
-                elif var_type == "camisa10":
-                    py_value = "True" if value.lower() == "verdadeiro" else "False"
-                    linha_traduzida = f'{var_name} = {py_value}'
-        
-        # 2. Imprimir: fla imprime <coisa>
-        if not linha_traduzida:
-            match = re.match(r'fla imprime\s+(.*)', linha_strip)
-            if match:
-                value_to_print = match.group(1)
-                linha_traduzida = f'print({value_to_print})'
+            # O grupo 1 agora captura apenas o que deve ser impresso, ignorando o tipo.
+            value_to_print = match.group(1).strip()
+            linha_traduzida = f'print({value_to_print})'
 
+        # 2. Atribuição de variável: <var> é <tipo> <valor>
+        if not linha_traduzida:
+            match = re.match(r'^(.*?)\s+é\s+(craque|torcida|camisa10)\s+(.*)', linha_strip)
+            if match:
+                var_name, var_type, value = match.groups()
+                var_name = var_name.strip()
+                
+                if "torcida canta" in value:
+                    if var_type == "craque":
+                        linha_traduzida = f'{var_name} = int(input())'
+                    else:
+                        linha_traduzida = f'{var_name} = input()'
+                else:
+                    if var_type == "craque":
+                        linha_traduzida = f'{var_name} = int({value})'
+                    elif var_type == "torcida":
+                        linha_traduzida = f'{var_name} = {value}'
+                    elif var_type == "camisa10":
+                        py_value = "True" if value.lower() == "verdadeiro" else "False"
+                        linha_traduzida = f'{var_name} = {py_value}'
+        
         # 3. Condicional: arrasca se <condicao>
         if not linha_traduzida:
             match = re.match(r'arrasca se\s+(.*)', linha_strip)
@@ -124,9 +113,6 @@ def traduzir_mengaolang_para_python(codigo_mng):
     return '\n'.join(linhas_python)
 
 def main():
-    """
-    Função principal para executar o tradutor a partir da linha de comando.
-    """
     if len(sys.argv) != 3:
         print("Uso: python tradutor.py <arquivo_entrada.mng> <arquivo_saida.py>")
         sys.exit(1)
