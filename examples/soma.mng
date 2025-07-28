@@ -1,0 +1,14 @@
+fla é campeão
+    fla imprime torcida "--- Calculadora do Mengão ---"
+    
+    fla imprime torcida "Digite o primeiro número:"
+    numero1 é craque torcida canta
+    
+    fla imprime torcida "Digite o segundo número:"
+    numero2 é craque torcida canta
+    
+    resultado é craque numero1 + numero2
+    
+    fla imprime torcida "O resultado da soma é:"
+    fla imprime resultado
+fla fim
