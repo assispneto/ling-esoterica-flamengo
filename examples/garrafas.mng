@@ -2,8 +2,10 @@ fla é campeão
     garrafas é craque 99
     
     jogo tenso garrafas > 0
-        fla imprime torcida "{} garrafas de cerveja no Maracanã".format(garrafas)
+        fla imprime torcida "{} garrafas de cerveja na parede do Maracanã".format(garrafas)
+        fla imprime torcida "{} garrafas de cerveja. Pegue uma e passe ao redor".format(garrafas)
         vai pra cima garrafas
+        fla imprime torcida "{} garrafas de cerveja sobraram".format(garrafas)
         
-    fla imprime torcida "Acabou a cerveja! Pega mais uma!"
+    fla imprime torcida "Não tem mais garrafas de cerveja no Maracanã"
 fla fim
