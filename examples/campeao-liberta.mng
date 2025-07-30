@@ -1,0 +1,11 @@
+fla é campeão
+fla imprime "Digite o número de vezes que o Flamengo foi campeao da Libertadores: "
+campeao é craque torcida canta
+
+arrasca se campeao == 3 
+    fla imprime "Voce acertou!! O Falmengo foi campeão da Libertadores 3 vezes"
+
+arrasca se campeao != 3
+    fla imprime "Voce errou!! O Falmengo nao foi campeão da Libertadores {}".format(campeao)
+
+fla fim

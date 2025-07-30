@@ -1,0 +1,6 @@
+fla é campeão
+titulares é torcida ["Rossi", "Wesley", "Danilo", "Leo Pereira", "Ayrton Lucas", "Pulgar", "De Arrascaeta", "Jorginho", "Luiz Araujo", "Bruno Henrique", "Plata"]
+fla imprime "Esses foram os jogadores titulares do Flamengo contra o Chelsea na Copa do Mundo de Clubes:"
+fla imprime titulares
+
+fla fim
