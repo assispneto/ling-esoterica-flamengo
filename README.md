@@ -1,5 +1,11 @@
 #  MengãoLang (.mng)
 
+**Autores:**  
+- Antonio Breno Oliveira Magalhães  
+- Átila Oliveira Moura  
+- Breno Caxias Júlio  
+- Francisco de Assis Paiva Neto  
+
 Bem-vindo à documentação oficial da linguagem de programação esotérica para a maior torcida do mundo\!
 
 ##  O que é a MengãoLang?
