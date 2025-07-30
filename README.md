@@ -1,6 +1,6 @@
 # **🔥 MengãoLang (.mng)**
 
-Bem-vindo à documentação oficial da  , a linguagem de programação esotérica para a maior torcida do mundo\!
+Bem-vindo à documentação oficial da linguagem de programação esotérica para a maior torcida do mundo\!
 
 ## **💡 O que é a MengãoLang?**
 
